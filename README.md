@@ -1,2 +1,3 @@
 # LightBnB
-Repo for SQL and postgres implementations
+
+A repo for SQL and postgres implementations for an AirBNB style sample project.
