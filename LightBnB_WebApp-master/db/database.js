@@ -61,13 +61,19 @@ const getUserWithId = (id) => {
  */
 const addUser = (user) => {
   console.log(user);
+  const query = `
+  INSERT INTO users(name, email, password) 
+  VALUES($1, $2, $3) 
+  RETURNING *`;
+  const values = [user.name, user.email, user.password];
 
   // const newUser = new Promise((resolve, reject) => {
-    
+
   // })
 
-
-
+  pool.query(query, values).then((res) => {
+    console.log(res);
+  });
 
   // const userId = Object.keys(users).length + 1;
   // user.id = userId;
