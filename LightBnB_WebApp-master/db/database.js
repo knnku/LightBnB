@@ -30,7 +30,7 @@ const getUserWithEmail = (email) => {
   return pool
     .query(query, values)
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     })
 
@@ -54,7 +54,7 @@ const getUserWithId = (id) => {
   return pool
     .query(query, values)
     .then((res) => {
-      console.log(res.rows[0]);
+      // console.log(res.rows[0]);
       return res.rows[0];
     })
 
@@ -79,6 +79,7 @@ const addUser = (user) => {
 
   pool.query(query, values).then((res) => {
     console.log(res);
+    return res.rows[0];
   });
 
   // const userId = Object.keys(users).length + 1;
@@ -97,19 +98,20 @@ const addUser = (user) => {
 const getAllReservations = function (guest_id, limit = 10) {
   // return getAllProperties(null, 2);
 
-  const query = `SELECT properties.id as id, title, cost_per_night, start_date, AVG(property_reviews.rating) as average_rating
+  const query = `SELECT properties.id as id, title, cost_per_night, start_date, end_date, AVG(property_reviews.rating) as average_rating
   FROM reservations 
   JOIN users ON guest_id = users.id
   JOIN properties ON property_id = properties.id
   JOIN property_reviews ON reservation_id = reservations.id
-  WHERE reservations.$1
-  GROUP BY properties.id, start_date
+  WHERE users.id = $1
+  GROUP BY properties.id, start_date, end_date
   ORDER BY start_date;`;
 
   const values = [guest_id];
 
   return pool.query(query, values).then((res) => {
     console.log(res);
+    return res.rows;
   });
 };
 
