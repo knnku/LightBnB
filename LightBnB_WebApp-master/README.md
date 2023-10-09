@@ -1,6 +1,25 @@
 # LightBnB
 
-A simple multi-paged Airbnb clone that uses server-side javascript to display information from user input to web pages using SQL queries.
+A simple multi-paged Airbnb clone that uses server-side code to display information from user input to web pages using SQL and Javascript.
+
+## Build and run
+
+1. Clone the repository onto your local device. <br>
+```https://github.com/knnku/LightBnB light-bnb```
+2. Install dependencies using the `npm install`.
+3. Run the migrations and seeds to hydrate the database.
+3. Start the web server using the `npm run local`. The app will be served at <http://localhost:3000/>.
+4. Direct browser to <http://localhost:3000/>.
+5. Create an account or login using accounts from the supplied database.
+
+## Previews
+
+### LightBnB Homepage
+!["Light BNB Home Page"](https://raw.githubusercontent.com/knnku/LightBnB/master/LightBnB_WebApp-master/docs/lightbnb-home.png)
+--
+
+### LightBnB ERD
+!["Light BNB Home Page"](https://raw.githubusercontent.com/knnku/LightBnB/master/LightBnB_WebApp-master/docs/lightbnb-erd.png)
 
 ## Project Structure
 
@@ -55,3 +74,14 @@ A simple multi-paged Airbnb clone that uses server-side javascript to display in
 * `routes` contains the router files which are responsible for any HTTP requests to `/users/something` or `/api/something`. 
 * `styles` contains all of the sass files. 
 * `server.js` is the entry point to the application. This connects the routes to the database.
+
+## Dependencies
+
+- Node 5.10.x or above
+- Express
+- node-pg
+- bcrypt
+- cookie-session
+
+
+*Assembled by @knnku as a part of the LHL flex-web program curriculum.*
