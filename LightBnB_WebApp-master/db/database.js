@@ -1,5 +1,3 @@
-const properties = require("./json/properties.json");
-const users = require("./json/users.json");
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -9,11 +7,7 @@ const pool = new Pool({
   database: "lightbnb",
 });
 
-// pool.query(`SELECT title FROM properties LIMIT 10;`).then((res) => {
-//   console.log(res);
-// });
-
-/// Users
+// Users ------------------------------------
 
 /**
  * Get a single user from the database given their email.
@@ -22,6 +16,7 @@ const pool = new Pool({
  */
 
 const getUserWithEmail = (email) => {
+
   const query = `SELECT *
                 FROM users
                 WHERE email = $1`;
@@ -30,12 +25,11 @@ const getUserWithEmail = (email) => {
   return pool
     .query(query, values)
     .then((res) => {
-      // console.log(res.rows[0]);
       return res.rows[0];
     })
 
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
       return null;
     });
 };
@@ -46,6 +40,7 @@ const getUserWithEmail = (email) => {
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = (id) => {
+
   const query = `SELECT *
                 FROM users
                 WHERE id = $1`;
@@ -54,12 +49,11 @@ const getUserWithId = (id) => {
   return pool
     .query(query, values)
     .then((res) => {
-      // console.log(res.rows[0]);
       return res.rows[0];
     })
 
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
       return null;
     });
 };
@@ -70,7 +64,7 @@ const getUserWithId = (id) => {
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser = (user) => {
-  // console.log(user);
+
   const query = `
   INSERT INTO users(name, email, password) 
   VALUES($1, $2, $3) 
@@ -80,20 +74,14 @@ const addUser = (user) => {
   pool
     .query(query, values)
     .then((res) => {
-      console.log(res);
       return res.rows[0];
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
     });
-
-  // const userId = Object.keys(users).length + 1;
-  // user.id = userId;
-  // users[userId] = user;
-  // return newUser;
 };
 
-/// Reservations
+/// Reservations --------------------------
 
 /**
  * Get all reservations for a single user.
@@ -101,7 +89,6 @@ const addUser = (user) => {
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = (guest_id, limit = 10) => {
-  // return getAllProperties(null, 2);
 
   const query = `SELECT properties.*, start_date, end_date, AVG(property_reviews.rating) as average_rating
   FROM reservations 
@@ -117,15 +104,14 @@ const getAllReservations = (guest_id, limit = 10) => {
   return pool
     .query(query, values)
     .then((res) => {
-      // console.log(res);
       return res.rows;
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
     });
 };
 
-/// Properties
+/// Properties -----------------------------
 
 /**
  * Get all properties.
@@ -134,15 +120,14 @@ const getAllReservations = (guest_id, limit = 10) => {
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 const getAllProperties = (options, limit = 10) => {
-  // 1
+
   const queryParams = [];
-  // 2
+
   let queryString = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
   JOIN property_reviews ON properties.id = property_id `;
 
-  // 3
   if (options.city) {
     queryParams.push(`%${options.city}%`);
     queryString += `WHERE city LIKE $${queryParams.length} `;
@@ -168,7 +153,6 @@ const getAllProperties = (options, limit = 10) => {
     queryString += `AND rating >= $${queryParams.length} `;
   }
 
-  // 4
   queryParams.push(limit);
   queryString += `
   GROUP BY properties.id
@@ -176,18 +160,13 @@ const getAllProperties = (options, limit = 10) => {
   LIMIT $${queryParams.length};
   `;
 
-  // 5
-  console.log(queryString, queryParams);
-
-  // 6
   return pool
     .query(queryString, queryParams)
     .then((res) => {
-      console.log(res.rows.length);
       return res.rows;
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
     });
 };
 
@@ -238,18 +217,11 @@ const addProperty = function (property) {
   pool
     .query(query, values)
     .then((res) => {
-      console.log(res);
       return res.rows;
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Query Err: ", err);
     });
-
-
-  // const propertyId = Object.keys(properties).length + 1;
-  // property.id = propertyId;
-  // properties[propertyId] = property;
-  // return Promise.resolve(property);
 };
 
 module.exports = {
