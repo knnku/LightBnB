@@ -1,4 +1,4 @@
-# LightBnB
+!["LightBnB](https://raw.githubusercontent.com/knnku/LightBnB/master/LightBnB_WebApp-master/docs/lightbnb-header.png)
 
 A simple multi-paged Airbnb clone that uses server-side code to display information from user input to web pages using SQL and Javascript.
 
@@ -10,7 +10,7 @@ A simple multi-paged Airbnb clone that uses server-side code to display informat
 3. Run the migrations and seeds to hydrate the database.
 3. Start the web server using the `npm run local`. The app will be served at <http://localhost:3000/>.
 4. Direct browser to <http://localhost:3000/>.
-5. Create an account or login using accounts from the supplied database.
+5. Create an account or log-in using accounts from the supplied database.
 
 ## Previews
 
